@@ -3,16 +3,25 @@ const userOperatorElement = document.querySelector('#user-operator');
 const num1Element = document.querySelector('#num1');
 const num2Element = document.querySelector('#num2');
 const solutionElement = document.querySelector('#solution');
+const hpBarElement = document.querySelector('.health-bar');
 let hpElement = document.querySelector('.health');
 let pointsElement = document.querySelector('.points');
 let points = 0;
 let health = 100;
+let posCombo = 0;
+let negCombo = 0;
+
+// TODO Switch to React tasks
+// anything that holds a value will need to be in a state
+
+console.log(document.querySelector('.health-bar'));
 
 function generateQuestion() {
-  const operator = ['+', '-'];
+  const operator = ['+', '-', '*', '/'];
   const randomOperator = operator[Math.floor(Math.random() * operator.length)];
-  const number1 = Math.floor(Math.random() * 10);
-  const number2 = Math.floor(Math.random() * 10);
+  // +1 prevents 0 shenanigans
+  const number1 = Math.floor(Math.random() * 10) + 1;
+  const number2 = Math.floor(Math.random() * 10) + 1;
   const solution = eval(`${number1} ${randomOperator} ${number2}`);
 
   console.log(
@@ -48,42 +57,37 @@ function handleKeyPress(e) {
       handleChange();
       break;
     case 'ArrowLeft':
-      userOperatorElement.textContent = '*';
+      userOperatorElement.textContent = '/';
+      handleChange();
       break;
     case 'ArrowRight':
-      userOperatorElement.textContent = '/';
+      userOperatorElement.textContent = '*';
+      handleChange();
       break;
   }
 }
 
 function handleChange() {
-  // console.log(typeof operatorElement.textContent)
-  // console.log(typeof randomOperator)
   if (userOperatorElement.textContent != operatorElement.textContent) {
-    console.log(
-      'incorrect!',
-      operatorElement.textContent,
-      userOperatorElement.textContent
-    );
-    health -= 5;
+    // delay if needed
+    // setTimeout(generateQuestion ,500)
+    generateQuestion();
+
+    health -= 5 + negCombo;
     hpElement.textContent = `Hp: ${health}`;
+    hpBarElement.value = health;
+    negCombo++;
+    posCombo = 0;
     return health;
   }
-  console.log('correct!');
   generateQuestion();
-  points++;
-  pointsElement.textContent = `Points: ${points}`;
+  points += 1 + posCombo;
+  pointsElement.textContent = `Points: ${points + posCombo}`;
+  posCombo++;
+  console.log(posCombo);
+  negCombo = 0;
   return points;
 }
-
-// problemElement.textContent = `${number1} _ ${number2} = ${eval(question(number1, number1, randomOperator))}`
-
-// solutionElement.textContent = problem.generateQuestion(
-//   number1,
-//   number2,
-//   randomOperator
-// );
-// question(number1, number2, randomOperator);
 
 document.querySelector('body').addEventListener('keydown', handleKeyPress);
 operatorElement.addEventListener('change', () => console.log('hi'));
