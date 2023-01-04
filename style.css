@@ -1,5 +1,10 @@
-#operator {
-  width: 400px;
-  height: 200px;
-  border: 2px black solid;
+
+
+
+span {
+  font-size: 50px;
+}
+
+.hidden {
+  display: none;
 }
