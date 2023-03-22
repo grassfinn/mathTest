@@ -4,32 +4,42 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/public/style.css" />
     <title>Document</title>
   </head>
   <body>
-    <h2 class="health"></h2>
-    <progress class="health-bar" value="100" max="100"></progress>
-    <!-- <div class="health-bar">
-    </div> -->
-    <h2 class="points"></h2>
-    <section class="problem">
-      <span class="piece" id="num1"></span>
-      <span class="piece" id="user-operator"> &nbsp</span>
-      <span class="piece" id="num2"></span>
-      <span class="piece" id="equals">=</span>
-      <span class="piece" id="solution"></span>
-    </section>
+    <form action="/score" method="POST">
+      <h2 class="health"></h2>
+      <progress class="health-bar" value="100" max="100"></progress>
+      <!-- <div class="health-bar">
+      </div> -->
+      <h2 class="points"></h2>
+      <input class="form-points" type="hidden" name="score" />
+      <section class="problem">
+        <span class="piece" id="num1"></span>
+        <span class="piece" id="user-operator"> &nbsp</span>
+        <span class="piece" id="num2"></span>
+        <span class="piece" id="equals">=</span>
+        <span class="piece" id="solution"></span>
+      </section>
+      <button class="submit">Submit</button>
+    </form>
 
     <!-- Phone controls/ desktop arrows -->
     <div class="controls">
-      <div class="arrows left-arrow inactive" data-key="ArrowLeft" data-state="inactive">⬅</div>
-      <div class="arrows up-arrow inactive" data-key="ArrowUp" >⬆</div>
-      <div class="arrows down-arrow inactive" data-key="ArrowDown" >⬇</div>
-      <div class="arrows right-arrow inactive" data-key="ArrowRight" >➡</div>
+      <div
+        class="arrows left-arrow inactive"
+        data-key="ArrowLeft"
+        data-state="inactive"
+      >
+        ⬅
+      </div>
+      <div class="arrows up-arrow inactive" data-key="ArrowUp">⬆</div>
+      <div class="arrows down-arrow inactive" data-key="ArrowDown">⬇</div>
+      <div class="arrows right-arrow inactive" data-key="ArrowRight">➡</div>
     </div>
 
     <div id="operator" class="hidden"></div>
-    <script src="app.js"></script>
+    <script src="./public/app.js"></script>
   </body>
 </html>

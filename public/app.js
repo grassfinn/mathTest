@@ -7,6 +7,8 @@ const hpBarElement = document.querySelector('.health-bar');
 const controls = document.querySelectorAll('.arrows');
 let hpElement = document.querySelector('.health');
 let pointsElement = document.querySelector('.points');
+let formPoints = document.querySelector('.form-points');
+formPoints.value = 0;
 let points = 0;
 let health = 100;
 let posCombo = 0;
@@ -23,8 +25,8 @@ function generateQuestion() {
   const operator = ['+', '-', '*', '/'];
   const randomOperator = operator[Math.floor(Math.random() * operator.length)];
   // +1 prevents 0 shenanigans
-  const number1 = Math.floor(Math.random() * 100) + 1;
-  const number2 = Math.floor(Math.random() * 100) + 1;
+  const number1 = Math.floor(Math.random() * 10) + 1;
+  const number2 = Math.floor(Math.random() * 10) + 1;
 
   // creating a function constructor that will run the code to get the solution
   // https://www.youtube.com/watch?v=a7YGQ7kj6C0
@@ -98,14 +100,21 @@ function handleChange() {
     hpBarElement.value = health;
     negCombo++;
     posCombo = 0;
+    if (health <= 0) {
+      formPoints.value = points;
+      document.querySelector('.submit').click();
+      // console.log(formPoints);
+    }
     return health;
   }
   generateQuestion();
   points += 1 + posCombo;
   pointsElement.textContent = `Points: ${points + posCombo}`;
   posCombo++;
-  console.log(posCombo);
+  // console.log(posCombo);
   negCombo = 0;
+  // console.log(document.querySelector('.form-points'));
+
   return points;
 }
 
@@ -113,3 +122,28 @@ document.querySelector('body').addEventListener('keydown', handleKeyPress);
 operatorElement.addEventListener('change', () => console.log('hi'));
 
 // ⬆⬇➡⬅
+
+async function postData(e) {
+  const form = document.querySelector('form');
+
+  e.preventDefault();
+  const formData = new FormData(form);
+  console.log([...formData]);
+  const baseUrl = 'http://localhost:3000/';
+  const response = await fetch(baseUrl, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+  console.log(data);
+}
+
+async function handleSubmit(e) {
+  console.log(e.target);
+  e.preventDefault();
+}
+
+document.querySelector('form').addEventListener('submit', postData);
